@@ -1,6 +1,6 @@
 ---
 - name: List all files
-  hosts: Test1
+  hosts: all
   connection: local
   tasks:
         - name: list files
