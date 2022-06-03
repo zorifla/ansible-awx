@@ -1,7 +1,12 @@
-- hosts: Test1
+---
+- name: List all files
+  hosts: Test1
+  connection: local
   tasks:
-    - name: Ping all hosts
-      ping:
-    - name: Print a message
-      debug:
-        msg: 'All set'
+        - name: list files
+          shell: "ls -lstr"
+          register: out_put
+
+        - name: debug
+          debug:
+               msg: "{{ out_put.stdout_lines }}"
