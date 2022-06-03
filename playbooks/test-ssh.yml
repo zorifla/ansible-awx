@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: Test1
   user: {{ ansible_user }}
   tasks:
     - name: Ping all hosts
