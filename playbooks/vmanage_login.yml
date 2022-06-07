@@ -1,0 +1,24 @@
+---
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Login
+      ansible.builtin.uri:
+        url: "{{ vmanage_base_url }}/j_security_check"
+        method: POST
+        body:
+          j_username: "{{ ansible_user }}"
+          j_password: "{{ ansible_password }}"
+        body_format: form-urlencoded
+        return_content: yes
+        validate_certs: no
+      no_log: False  # Don't show output as your password will be on the URI string
+      register: login_results
+      delegate_to: localhost
+ 
+    - name: Check if login succeeded
+      ansible.builtin.assert:
+        that: login_results.set_cookie is defined
+        fail_msg: "Login failed"
+        success_msg: "Login succeeded"
